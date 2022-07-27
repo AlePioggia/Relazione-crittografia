@@ -1,0 +1,33 @@
+\chapter{Introduzione}
+
+\section{Che cos'è la firma digitale?}
+
+\subsection{Dal punto di vista generale}
+
+La firma digitale rappresenta una tecnica, fondata su precisi principi matematici, che ha lo scopo di dimostrare l'autenticità di un documento digitale, garantendo:
+\begin{itemize}
+	\item l'integrità dei dati in esso contenuti;
+	\item l'autenticità delle informazioni relative al sottoscrittore;
+	\item la non alterabilità del documento;
+	\item le non ripudiabilità della firma.
+\end{itemize}
+Le caratteristiche sovraelencate implicano che, il sottoscrittore una volta apposta la firma:
+\begin{itemize}
+	\item non potrà disconoscere il documento, il quale non potrà essere assolutamente modificato (una eventuale modifica ne annulla la validità);
+	\item diventa l'unico titolare del certificato, dal momento che è in possesso delle credenziali per accedervi.
+\end{itemize}
+
+\subsection{Dal punto di vista tecnico}
+
+La firma può essere realizzata attraverso protocolli crittografici simmetrici (a chiave privata) o asimmetrici (a chiave pubblica). La maggior parte delle applicazioni utilizzano procolli asimmetrici, perché permettono di creare soluzioni più semplici e computazionalmente efficienti rispetto agli altri.
+
+\newpage
+
+\section{Firma digitale vs analogica}
+
+Facendo una attenta ricerca, è possibile stabilire che, le proprietà godute dalle firme digitali sono presenti anche in quelle analogiche, eppure è risaputo che le prime sono decisamente più sicure ed affidabili rispetto alle altre, questo perché:
+\begin{itemize}
+	\item la firma è falsificabile solo attraverso la conoscenza della chiave privata del firmatario, inoltre, modificando anche solo un bit del documento, esso perde di validità (per il motivo analogo, non è nemmeno riutilizzabile), di conseguenza è una tutela molto più forte rispetto alla firma analogica;
+	\item l'autore non può negare la paternità della dichiarazione presente nel documento siccome, al momento della firma era l'unico in possesso della chiave privata.
+	\item la firma dipende fortemente dal documento sul quale viene posta.
+\end{itemize}

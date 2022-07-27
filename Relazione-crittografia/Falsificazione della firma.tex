@@ -1,0 +1,61 @@
+\chapter{Falsificazione della firma}
+
+La firma digitale garantisce un ottimo grado di sicurezza, detto ciò, nonostante l'utilizzo di certificati rilasciati da enti di terze parti, in determinati casi è stato possibile falsificare la firma.
+Importante ricordare però che gli attacchi, nella maggior parte dei casi, sono efficaci perché nella creazione della firma digitale sono stati commessi degli errori. Le vulnerabilità più comuni:
+\begin{itemize}
+	\item l'utente rende nota, probabilmente per inesperienza, la chiave privata;
+	\item la manipolazione della procedura di firma;
+	\item introduzione di un attore malintenzionato che si assicura che il firmatario veda qualcosa di diverso da ciò che intende firmare.
+\end{itemize}
+
+\section{Universal signature forgery (USF)}
+
+L'USF è un attacco informatico, che sfrutta la proprietà di non falsificazione della firma digitale. In particolare, l'attacco consiste nel rendere appositamente invalida la firma durante la fase di verifica, aggiungendo al documento ulteriori dati. Si dice che l'USF "confonda" la logica di validazione, ovvero l'insieme di operazioni crittografiche che portano alla certificazione della firma. 
+Se l'hacker riesce con il suo attacco USF, la logica di convalida online o l'applicazione di visualizzazione mostrerà che la firma elettronica è valida e appartiene ad un individuo o entità specifica sul suo pannello di visualizzazione. 
+
+\section{Incremental saving attack (ISA)}
+Nel caso di un Incremental Saving Attack (ISA), l'obiettivo è quello di effettuare un salvataggio incrementale su un documento ridefinendone la struttura. Pertanto, l'obiettivo di questo attacco è il salvataggio incrementale o la funzione di aggiornamento incrementale di un documento PDF, che se utilizzata legittimamente consente a un utente di aggiungere annotazioni al proprio PDF. Queste annotazioni vengono salvate in modo incrementale come un nuovo corpo PDF dopo il contenuto originale del PDF. La funzione di salvataggio incrementale viene utilizzata anche per la firma del PDF e consente di aggiungere l'oggetto firma al contenuto del file originale. Normalmente, qualsiasi modifica dopo la firma di un documento attiverebbe un avviso che il documento è stato manomesso. Tuttavia, quando esegue un attacco ISA, l'autore dell'attacco potrebbe aggiungere contenuto aggiuntivo, come nuove pagine o annotazioni a un PDF già firmato. Tecnicamente, questa violazione non è un attacco. Invece, è un exploit della funzione di salvataggio incrementale del PDF. Tuttavia, la vulnerabilità si verifica quando la logica di convalida della firma non rileva che il contenuto del file PDF è stato manomesso. Il contenuto non firmato che è stato aggiunto dopo la firma del documento è semplicemente visto come un aggiornamento dalla persona fisica o giuridica che ha originariamente creato la firma elettronica del documento. Un attacco ISA riuscito comporterà la visualizzazione di nuovi aggiornamenti di contenuto/corpo, mentre i processi di verifica della firma rimarranno ignari che sono state apportate modifiche o aggiornamenti al documento PDF.
+
+\section{Signature Wrapping (SWA)}
+
+Un attacco Signature Wrapping (SWA) utilizza un approccio unico per aggirare la protezione della firma di un PDF senza accedere alla sua funzione di salvataggio incrementale. Lo fa spostando la seconda parte del /ByteRange firmato alla fine del documento violato. Nel frattempo, l'attaccante riutilizza quindi il puntatore xrif all'interno del trailer firmato del documento per fare riferimento al suo xrif manipolato. In alcuni casi, l'attaccante può anche avvolgere la seconda parte riposizionata con un oggetto stream o un dizionario per impedirne l'elaborazione da parte del PDF o della funzione di protezione della firma online. In un attacco SWA riuscito, un utente malintenzionato può aggiungere oggetti dannosi non firmati nel documento. Se ha scelto di avvolgere la seconda parte spostata, questi oggetti possono essere posizionati prima o dopo l'xrif manipolato. Se non viene aggiunto alcun wrapping, gli oggetti dannosi verranno posizionati dopo l'xrif manipolato. A seconda del visualizzatore PDF, l'autore dell'attacco può copiare l'ultimo trailer del file e inserirlo dopo il suo xrif manipolato per consentire l'apertura del file PDF e per ignorare la verifica della firma senza che le manipolazioni vengano rilevate.
+
+\section{Il paradosso della chiave privata}
+
+L'utilizzo di una chiave privata, nei protocolli asimmetrici, ne garantisce il funzionamento e dunque è una componente fondamentale nel garantire una comunicazione sicura. Detto ciò però, è necessario memorizzarla in un dispositivo fisico, ad esempio il computer dell'utente a cui è stata rilasciata e questo comporta una vulnerabilità, ovvero il fatto che la sicurezza della chiave privata dipenda fortemente dal dispositivo in cui è memorizzata. A questo proposito, negli anni si è cercato di ovviare al problema, proponendo diverse soluzioni, le più note:
+\begin{itemize}
+	\item la smart card;
+	\item l'otp (la one time password);
+	\item token usb;
+	\item token wireless.
+\end{itemize}
+
+\subsection{Smart card}
+
+Una smart card è una carta, generalmente dalle dimensioni di un comune bancomat, che possiede al suo interno, un insieme di dispositivi hardware che permettono di gestire ed elaborare dati, seguendo precisi standard di sicurezza. Ho deciso di citarla perché è possibile memorizzare al suo interno la chiave privata. In particolare la carta, interfacciandosi con un lettore esterno, riceve l'hash calcolato, lo firma con la chiave privata e lo restituisce. Un ulteriore layer (o strato) di sicurezza è dato dal fatto che prima di ogni utilizzo, è necessario inserire un pin, in modo da pregiudicarne un utilizzo malevolo da parte di un malintenzionato (è inoltre possibile revocare la validità del certificato della carta in caso di furto).
+
+\subsubsection{Problema principale}
+
+Il noto Ronald Rivest, inventore del crittosistema RSA, ha rimarcato una contraddizione presente nel meccanismo di firma digitale attraverso questi dispositivi. Lo scienziato definisce il meccanismo "intrinsecamente insicuro", in quanto, nonostante la chiave privata sia memorizzata in un dispositivo sicuro, durante il procedimento di firma diventa vulnerabile, in quanto deve dipendere dalla sicurezza del dispositivo con cui si interfaccia. Per ovviare al problema, si potrebbe pensare ad un'applicazione perfettamente affidabile per la firma digitale che sia eseguibile solo ed esclusivamente su una tipologia di dispositivi stand-alone portatili, che non permettano l'esecuzione di altri programmi.
+
+\subsection{Dispositivi OTP (one-time-password)}
+
+Mobile OTP non è altro che una password usa-e-getta, con breve scadenza (pochi secondi dopo la creazione) utile per l’autenticazione online e l’accesso sicuro ai servizi di firma digitale online, anche detta firma digitale “remota”.
+Questo servizio aggira la necessità di utilizzo di token o smartcard fisici per l’accesso a servizi di firma digitale, rendendolo particolarmente efficace per i dispositivi mobili come gli smartphone o i tablet.
+La OTP Mobile è un sistema basato sull’autenticazione a due fattori (Two-factor Authentication), ossia il sistema utilizzerà due evidenze per verificare, con un ampio grado di sicurezza, l’identità dell’utente.  Una volta verificata l’autenticità dell’identità attraverso il sistema OTP Mobile, l’utente potrà accedere ai servizi di firma digitale remota messi a disposizione dai certificatori accreditati DigitPA.
+\subsubsection{Principali vantaggi}
+\begin{itemize}
+	\item semplicità, è sufficiente possedere uno smartphone;
+	\item rapidità, l'attivazione è molto rapida rispetto alla firma digitale classica;
+	\item sicurezza, per ovvi motivi, una password che scade dopo pochi secondi elimina il rischio della staticità e violabilità di una password tradizionale;
+	\item accessibilità, il servizio è utilizzabile sempre, comunque ed ovunque.
+\end{itemize}
+
+\subsubsection{Considerazioni}
+I sistemi protetti da OTP, se implementati in maniera impropria, possono risultare vulnerabili ad un attacco informatico, chiamato snooping. Lo snooping rappresenta una tecnica di hacking in cui, in una comunicazione di rete, fra stazioni remote, l'hacker è in grado di intercettare il traffico trasmesso. Il rimedio principale consiste nell'utilizzo dello standard https (secure http), il quale oscura i dati trasmessi, crittografandoli. Al giorno d'oggi è pressoché impossibile trovare siti di aziende rinomate, pubbliche o private, che non siano protette da questo standard, di conseguenza non si tratta di una minaccia. 
+
+\newpage
+
+\subsection{Token USB}
+
+L'usb token è un dispositivo hardware, che permette di effettuare la firma, funziona in modo autonomo ,è sufficiente una uscita usb e comprende il software per la firma e per la gestione del dispositivo oltre ad una memoria di piccole ma sufficienti dimensioni. La caratteristica principale del token USB, è che viene consegnato direttamente dall'ente certificatore, che svincola il possessore del dispositivo dalla necessità di introdurre password temporanee o codici pin di accesso, in quanto è gestito tutto autonomamente dal dispositivo.

@@ -1,0 +1,100 @@
+
+% ---------------- RELAZIONE PROGETTO DI PROGRAMMAZIONE AD OGGETTI (OOP) --------
+\documentclass[a4paper,14pt]{report}
+
+% ----------------------------- PREAMBLE --------------------------------------- 
+
+\usepackage{lmodern}
+\usepackage{alltt, fancyvrb, url}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{layout}
+\usepackage[italian]{babel}
+\usepackage[italian]{cleveref}
+\usepackage{comment}
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage[scaled=.92]{helvet}
+\usepackage[T1]{fontenc}
+\usepackage{lscape}
+\usepackage{listings}
+\usepackage{color}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+	language=Python,
+	aboveskip=5mm,
+	belowskip=5mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3
+}
+
+
+% hyperref settings
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black, %blue
+	filecolor=magenta,      
+	urlcolor=cyan,
+	pdftitle={Sharelatex Example},
+	bookmarks=true,
+	pdfpagemode=FullScreen,
+}
+
+% ----------------------------- PREAMBLE END -----------------------------------
+
+\makeindex
+
+\title{\textbf{Firme digitali}}
+\author{Alessandro Pioggia}
+
+\begin{document}
+	\makeatletter
+	\begin{titlepage}
+		\begin{center}
+			{\Huge  \@title }\\[3ex] 
+			{\large  \@author}\\[3ex] 
+			{\large \@date}
+		\end{center}
+	\end{titlepage}
+	\makeatother
+	\thispagestyle{empty}
+	\newpage
+	
+	%\maketitle
+	
+	\tableofcontents
+	
+	% \input: import the commands from filename.tex to target file.
+	
+	% \include: does a \clearpage and does an \input.
+	
+	\newpage
+	
+	\include{Introduzione}
+	
+	\include{Certificati digitali}
+	
+	\include{Funzionamento}
+	
+	\include{Implementazione della firma digitale con RSA}
+	
+	\include{Falsificazione della firma}
+	
+	\include{Bibliografia}
+\end{document}

@@ -1,0 +1,42 @@
+\chapter{Certificati digitali}
+
+I protocolli a chiave pubblica portano tanti vantaggi, non è un caso il loro utilizzo pervasivo, in ambito comunicativo, a livello globale... detto ciò, c'è purtroppo un side-effect, derivato dalla natura del protocollo, ovvero il fatto che sia semplice ed immediato il recupero della chiave pubblica. L'esposizione della public key rende il sistema potenzialmente vulnerabile agli attacchi informatici del tipo key-only (il più noto è l'attacco man in the middle), il problema viene parzialmente risolto attraverso il rilascio di certificati digitali.
+
+\subsection{Attacco man in the middle}
+
+Data una comunicazione con protocollo a chiave asimmetrica fra due critto-analisti, l'attacco informatico consiste nell'intrusione di un terzo soggetto, che si interpone fra mittente e destinatario, a loro insaputa. 
+
+\subsubsection{Scenario base}
+
+Supponiamo che Marco voglia comunicare con Riccardo, inconsapevoli della presenza di un intruso:
+
+\begin{itemize}
+	\item Marco richiede la chiave pubblica di Riccardo attraverso l'invio di una mail;
+	\item l'intruso, in attesa del momento giusto, intercetta la richiesta di Marco e risponde inviando la propria chiave pubblica, ingannandolo;
+	\item l'attacco è quasi ultimato, a questo punto l'intruso rimane in ascolto e ciascun crittogramma inviato da Marco, viene cifrato con la chiave dell'intruso e ritrasmesso poi a Riccardo.
+\end{itemize}
+
+\subsection{Metodo risolutivo}
+
+Come già citato, l'attacco può essere contenuto attraverso l'utilizzo di certificati digitali, ovvero dei documenti elettronici che attestano la relazione 1:1 tra la chiave pubblica e l'identità di un soggetto. Il certificato in questione contiene una vasta gamma di informazioni, le più significative sono: 
+\begin{itemize}
+	\item firma digitale dell'emittente;
+	\item identità del proprietario;
+	\item periodo di validità.
+\end{itemize}
+Ciò che rende i certificati digitali validi ed affidabili è il rilascio da parte di un ente terzo e fidato come autorità di certificazione, in sigla CA. Dal momento che si tratta di un trusted third party, si scongiura l'eventualità che il documento venga falsificato.
+
+\subsection{Certificate authority}
+Da wikipedia: \\\\
+In crittografia, una Certificate Authority, o Certification Authority (CA; in italiano: "Autorità Certificativa"[1]), è un soggetto terzo di fiducia (trusted third part), pubblico o privato, abilitato ad emettere un certificato digitale tramite una procedura di certificazione che segue standard internazionali e in conformità alla normativa europea e nazionale in materia.
+Il sistema in oggetto utilizza la crittografia a doppia chiave, o asimmetrica, in cui una delle due chiavi viene resa pubblica all'interno del certificato (chiave pubblica), mentre la seconda, univocamente correlata con la prima, rimane segreta e associata al titolare (chiave privata). Una coppia di chiavi può essere attribuita ad un solo titolare. L'autorità dispone di un certificato con il quale sono firmati tutti i certificati emessi agli utenti, e ovviamente deve essere installato su una macchina sicura.
+
+\subsection{CRL}
+
+I certificati digitali hanno una scadenza, però possono andare incontro ad una revoca anticipata, l'insieme delle revoche sono catalogate in un certificate revocation list (CRL), che viene pubblicato e di conseguenza aggiornato periodicamente dalla autorità di certificazione. Lo stato di revoca si concretizza nel caso in cui si verifichi almeno uno dei seguenti casi:
+\begin{itemize}
+	\item il CA rilascia in modo improprio un certificato;
+	\item si sospetta che una chiave privata sia stata compromessa;
+	\item inadempimento.
+\end{itemize}
+Il CRL dà dunque la possibilità di verificare la validità di un certificato, non è però l'unico, ad esempio è possibile interrogare direttamente la CA attraverso il protocollo OCSP.

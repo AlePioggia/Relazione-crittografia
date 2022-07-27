@@ -1,0 +1,60 @@
+\chapter{Implementazione della firma digitale con RSA}
+
+In questo capitolo verrà mostrata l'implementazione di firma digitale, nella pratica, attraverso la generazione di chiavi RSA. Si tratta di uno script in python, che sfrutta la tecnologia pycryptodome per la generazione della chiave. L'esempio comprende creazione, istanziamento e verifica della firma.
+
+\section{Generazione delle chiavi}
+
+Attraverso il metodo generate, fornito dalla libreria pycryptodome, si è in grado di generare agilmente la coppia di chiavi, pubblica e privata, sotto-forma di stringhe. Il metodo prende come argomento un intero, che rappresenta il numero di bit della chiave, per questo esempio è stata generata una coppia di chiavi a 128 byte, quindi 1024 bit.
+
+\begin{lstlisting}
+	from Crypto.PublicKey import RSA
+	from Crypto.Signature.pkcs1_15 import PKCS115_SigScheme
+	from Crypto.Hash import SHA256
+	import binascii
+	
+	keyPair = RSA.generate(bits=1024)
+	privateKey, publicKey = keys.privateKey(), keys.publicKey()
+	
+\end{lstlisting}
+
+\newpage
+
+\section{Firma del messaggio (mittente)}
+
+\begin{lstlisting}
+	#funzione che esegue lo hash del messaggio
+	def hash(message):
+		return SHA256.new(msg)
+	
+	#funzione che effettua la firma
+	def sign(hash, keys):
+		signer = PKCS115_SigScheme(keyPair)
+		return signer.sign(hash)
+	
+	message = input("Insert the message that you'd like to sign")
+	signature = sign(hash(message))
+\end{lstlisting}
+
+In seguito alla generazione delle chiavi RSA, si procede con la firma di un messaggio arbitrario sfruttando la chiave privata. Il codice sovrastante esegue i seguenti passaggi:
+\begin{itemize}
+	\item hashing del messaggio, sfruttando l'algoritmo SHA-512;
+	\item generazione della firma, attraverso la chiave privata ottenuta precedentemente;
+	\item creazione del crittogramma, che servirà poi al destinatario per effettuare la verifica.
+\end{itemize}
+
+\section{Verifica della firma}
+
+\begin{lstlisting}
+	#Se ritorna true -> firma valida, false -> firma non valida
+	
+	def verify(message):
+		hash = SHA256.new(msg)
+		verifier = PKCS115_SigScheme(publicKey)
+		return verifier.verify(hash, signature)
+	
+	message = input("Insert the message that you'd like to verify")
+	verify(message)
+	
+\end{lstlisting}
+
+In questa fase si effettua la verifica della firma, dunque viene effettuata la decrittazione attraverso la chiave pubblica e comparando l'hash della firma con l'hash del messaggio originale.

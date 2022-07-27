@@ -1,0 +1,22 @@
+\chapter{Funzionamento}
+
+\section{Fasi}
+
+\subsection{Generazione impronta digitale}
+
+La prima fase consiste nella generazione dell'impronta digitale (o message digest), attraverso una funzione di hashing, che permette di ottenere una stringa di grandezza costante, è unica e non invertibile. 
+
+\subsection{Generazione della firma digitale}
+Il risultato ottenuto nel passaggio precedente viene cifrato, attraverso la chiave privata, il risultato di questo procedimento è la firma. Nel passaggio successivo la firma viene allegata, insieme alla chiave pubblica al documento. Importante considerare che chiunque può verificare la firma, il caso più comune è quello in cui un giudice si impegna per risolvere un dissidio fra 2 soggetti.
+
+\subsection{Invio al destinatario}
+
+Il mittente invia il documento firmato attraverso il metodo indicato e il certificato (CA) al destinatario.
+
+\subsection{Verifica del certificato}
+
+Il destinatario verifica l'autenticità attraverso la propria copia della chiave pubblica di CA. Se la verifica va a buon fine, si procede con la decifrazione e consecutiva verifica della firma. In particolare, il ricevitore decifra il crittogramma ricevuto attraverso la sua chiave privata. Nel caso in cui il messaggio hashato, sia uguale alla tupla (funzione hash, chiave pubblica del mittente), la verifica va a buon fine.
+
+\subsubsection{Hash function}
+
+Il ruolo giocato dalla funzione hash è fondamentale in questo processo, le sue caratteristiche fanno in modo che, la probabilità che da documenti diversi, si possa ottenere la stessa impronta, è infinitesimale.
